@@ -1,4 +1,26 @@
 framework 'Cocoa'
+require 'json/pure'
+require 'net/http'
+
+funnies = JSON.parse Net::HTTP.get URI 'http://imgur.com/r/funny.json'
+Imgur = Struct.new(:json) do
+  def url
+    "http://i.imgur.com/#{image}#{ext}"
+  end
+
+  private
+
+  def image
+    json["hash"]
+  end
+
+  def ext
+    json["ext"]
+  end
+end
+
+image = Imgur.new funnies["data"].sample
+
 size = NSScreen.mainScreen.frame.size
 W, H = size.width, size.height
 UW = W / 4.0
@@ -12,7 +34,7 @@ window = NSWindow.alloc.initWithContentRect unicornRect, styleMask: NSBorderless
 window.setBackgroundColor NSColor.colorWithCalibratedHue 0, saturation:0, brightness:0, alpha:0.0
 window.setOpaque false
 window.setLevel NSFloatingWindowLevel
-unicornImage = NSImage.alloc.initWithContentsOfFile File.expand_path '~/Downloads/unicorn.jpg'
+unicornImage = NSImage.alloc.initWithContentsOfURL NSURL.alloc.initWithString p image.url
 unicornView = NSImageView.alloc.initWithFrame unicornRect
 unicornView.setImage unicornImage
 window.setContentView unicornView
