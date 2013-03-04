@@ -1,1 +1,2 @@
-rvm macruby do ruby main.rb
+#!/usr/bin/env bash
+rvm macruby do ruby "$BASH_SOURCE"/../main.rb
