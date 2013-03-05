@@ -38,6 +38,9 @@ def image_view
   imageview
 end
 
+window.contentView.addSubview image_view
+window.contentView.setNeedsDisplay true
+window.makeKeyAndOrderFront nil
 
 # window.contentView.setWantsLayer true
 # layer = CALayer.layer
@@ -46,14 +49,11 @@ end
 # p "window's view: ", window.contentView
 # p "window's view: ", window.contentView.frame
 
-# window.setContentView image_view
-# window.contentView.setNeedsDisplay true
 
 # layer.setBackgroundColor NSColor.colorWithCalibratedHue 999, saturation:0, brightness: 0.6, alpha:0.5
 # layer.opaque = true
 # window.display
 # window.contentView.setDelegate self
-window.makeKeyAndOrderFront nil
 sleep 1
 
 
